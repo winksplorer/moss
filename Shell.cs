@@ -176,6 +176,12 @@
                             if (EnvironmentVariables.ContainsKey("RET"))
                                 EnvironmentVariables.Remove("RET");
 
+                            if (cmd.RequiresRoot && EnvironmentVariables["USER"] != "root")
+                            {
+                                Console.WriteLine("\\033[91mmoss: " + words[0] + ": insufficient permissions (program wants root, while current user is " + EnvironmentVariables["USER"] + ")\\033[0m\n");
+                                break;
+                            }
+
                             try
                             {
                                 cmd.Action(EnvironmentVariables["PWD"], Moss.CombineQuotedStrings(words.Skip(1).ToArray()), EnvironmentVariables);
@@ -191,7 +197,7 @@
                     }
                     if (!cmdFound)
                     {
-                        Moss.PrintWithANSI("\\033[91m-moss: " + words[0] + ": command not found\\033[0m\n");
+                        Moss.PrintWithANSI("\\033[91mmoss: " + words[0] + ": command not found\\033[0m\n");
                     }
                     break;
             }

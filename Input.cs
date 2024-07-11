@@ -46,9 +46,7 @@ namespace moss
                     line = string.Empty;
                     cmdHistoryPtr--;
                     if (cmdHistoryPtr > 0)
-                    {
                         line = cmdHistory[cmdHistory.Count - cmdHistoryPtr];
-                    }
                     Console.Write(line);
                 }
                 else if (key.Key == ConsoleKey.Tab)
